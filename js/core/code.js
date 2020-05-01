@@ -11,38 +11,49 @@
 **/
 (function(){
 
-  var viewModeButton;
-
   function init() {
     // Configuration
     Espruino.Core.Config.add("AUTO_SAVE_CODE", {
       section : "Communications",
-      name : "Auto Save",
+      name : "Auto Save",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
       description : "Save code to Chrome's cloud storage when clicking 'Send to Espruino'?",
       type : "boolean",
       defaultValue : true,
     });
 
-    // Setup code mode button
-    viewModeButton = Espruino.Core.App.addIcon({
-      id: "code",
-      icon: "code",
-      title : "Switch between Code and Graphical Designer",
-      order: 0,
+    // Setup 'Add new JavaScript file' button
+    Espruino.Core.App.addIcon({
+      id: "codeAdd",
+      icon: "code", // FIXME change icon
+      title: "Add new JavaScript file",
+      order: 100,
       area: {
         name: "code",
         position: "bottom"
       },
-      click: function() {
-        if (isInBlockly()) {
-          switchToCode();
-          Espruino.Core.EditorJavaScript.madeVisible();
-        } else {
-          switchToBlockly();
-        }
+      click: function () {
+        var newFile = {identifier:"", name: "untitled", extension: "js", content: "", location: ""};
+        addNewFilePopup(newFile);
+      }
+    });
+  
+    // Setup 'Add new Blocky file' button
+    Espruino.Core.App.addIcon({
+      id: "blockyAdd",
+      icon: "block", // FIXME change icon
+      title: "Add new Blocky file",
+      order: 200,
+      area: {
+        name: "code",
+        position: "bottom"
+      },
+      click: function () {
+        var newFile = {identifier:"", name: "untitled", extension: "xml", content: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>", location: ""};
+        addNewFilePopup(newFile);
       }
     });
 
+    // TODO check if this still is used in multi-tab
     // get code from our config area at bootup
     Espruino.addProcessor("initialised", function(data,callback) {
       var code;
@@ -57,20 +68,80 @@
       callback(data);
     });
 
-
     Espruino.addProcessor("sending", function(data, callback) {
       if(Espruino.Config.AUTO_SAVE_CODE)
         Espruino.Config.set("CODE", Espruino.Core.EditorJavaScript.getCode()); // save the code
       callback(data);
     });
-    // try and save code when window closes
-    function saveCode(e) {
+
+    // try and save code when window closes //TODO Check if this still works
+    function saveCode(e) { 
       if(Espruino.Config.AUTO_SAVE_CODE)
         Espruino.Config.set("CODE", Espruino.Core.EditorJavaScript.getCode());
     }
     window.addEventListener("close", saveCode);
     if (!Espruino.Core.Utils.isChromeWebApp()) // chrome complains if we use this
       window.addEventListener("beforeunload", saveCode);
+  }
+
+  // FIXME popup doesn't close immediatly
+  // FIXME split in differnt functions
+  // Open popup to name and create a new file
+  function addNewFilePopup(newFile) {
+    var fileType;
+
+    switch(newFile.extension){
+      case 'js':
+        fileType = "JavaScript"
+        break
+      case 'xml':
+        fileType = "Blocky"
+        break
+    }
+
+    html =
+        '<div class="addNewFilePopUp">' +
+        '<input id="name' + fileType + 'File" type="text" placeholder="File name" autofocus/>' +
+        '<button id="add' + fileType + 'File" class="popupBtn">Add ' + fileType + ' file</button>' +
+        '<p id="errMsg"></p>' +
+        '</div>';
+
+    // Initializing popup
+    popup = Espruino.Core.App.openPopup({
+      title: "Create new " + fileType + " file",
+      contents: html,
+      position: "center"
+    });
+
+    // Add onClick logic to add file and close popup
+    document.getElementById("add" + fileType + "File").addEventListener('click', function() {
+      // Get input
+      var newName = document.getElementById("name" + fileType + "File").value.trim();
+      var errMsgHolder = document.getElementById("errMsg");
+
+      // Validate input
+      if (newName == "" || newName.length == 0) {
+        errMsgHolder.innerHTML = "Name is required";
+        return false;
+      } else if (!(/^\S{2,}$/.test(newName))) {
+        errMsgHolder.innerHTML = 'Name cannot contain whitespace';
+        return false;
+      } else if(!(/^[a-zA-Z]+$/.test(newName))){
+        errMsgHolder.innerHTML = 'Only alphabets allowed';
+        return false;
+      } else {
+        errMsgHolder.innerHTML = '';
+      }
+
+      // Set file name
+      newFile.name = newName;
+
+      // file.js function
+      Espruino.Core.File.setFilesArray(newFile);
+
+      // Close the popup
+      popup.close();  
+    });
   }
 
   function isInBlockly() { // TODO: we should really enumerate views - we might want another view?
@@ -80,7 +151,6 @@
   function switchToBlockly() {
     $("#divcode").hide();
     $("#divblockly").show();
-    viewModeButton.setIcon("block");
     // Hack around issues Blockly have if we initialise when the window isn't visible
     Espruino.Core.EditorBlockly.setVisible();
   }
@@ -88,7 +158,8 @@
   function switchToCode() {
     $("#divblockly").hide();
     $("#divcode").show();
-    viewModeButton.setIcon("code");
+
+    Espruino.Core.EditorJavaScript.madeVisible(); // FIXME "TypeError: Cannot read property 'madeVisible' of undefined"
   }
 
   function getEspruinoCode(callback) {
@@ -107,7 +178,6 @@
     if (isInBlockly()) {
       document.querySelector("#divblockly").focus();
     } else {
-      //document.querySelector(".CodeMirror").focus();
       Espruino.Core.EditorJavaScript.getCodeMirror().focus()
     }
   }

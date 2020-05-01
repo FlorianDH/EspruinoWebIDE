@@ -47,5 +47,7 @@
     "serialport": "^7.1.4",
     "winnus": ""
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }

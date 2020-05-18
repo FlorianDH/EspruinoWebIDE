@@ -334,9 +334,9 @@ function addTabsOnInit(){
 
           reader.onload = function(e) {
             // Get the name and code of the file and add it to the files array
-            callback(convertFromOS(e.target.result));  
+            // callback(convertFromOS(e.target.result));  
             var splittedName = fileEntry.name.split(".", 2);
-            var newFile = {identifier: "", name: splittedName[0], extension: splittedName[1], content: e.target.result, location: fileEntry.fullPath};
+            var newFile = {identifier: "", name: splittedName[0], extension: splittedName[1], content: e.target.result};
             setFilesArray(newFile);
           };
           reader.onerror = function() {

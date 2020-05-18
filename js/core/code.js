@@ -32,7 +32,7 @@
         position: "bottom"
       },
       click: function () {
-        var newFile = {identifier:"", name: "untitled", extension: "js", content: "", location: ""};
+        var newFile = {identifier:"", name: "untitled", extension: "js", content: ""};
         addNewFilePopup(newFile);
       }
     });
@@ -48,7 +48,7 @@
         position: "bottom"
       },
       click: function () {
-        var newFile = {identifier:"", name: "untitled", extension: "xml", content: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>", location: ""};
+        var newFile = {identifier:"", name: "untitled", extension: "xml", content: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"};
         addNewFilePopup(newFile);
       }
     });

@@ -51,22 +51,26 @@ dd {
 .tabs-container {
   overflow-y: hidden;
   overflow-x: auto;
-  border-bottom: 2px solid #3498db;
+  /* border-bottom: 2px solid #3498db; */
   background-color: #42484a;
-  display: flex;
+  
   padding: 0px;
   margin: 0px;
+
+  display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
 }
 .tabs-container .tab-link {
   display: flex;
+  flex-shrink: 0;
   background-color: #3498db;
   color: #ffffff;
   font-weight: bold;
   margin-top: 1px;
   margin-right: 1px;
   padding: 0px 4px;
-  min-width: 120px;
+  width: 120px;
   cursor: pointer;
   line-height: 13px;
 }

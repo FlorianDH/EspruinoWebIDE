@@ -36,7 +36,7 @@ dd {
 
 ::-webkit-scrollbar-thumb 
 {
-    background: #bdc3c7;
+  background: #bdc3c7;
   border: 5px solid #ecf0f1;
 }
 
@@ -47,53 +47,49 @@ dd {
 
 *.paramStyle { background-color:#ccccff; }
 
-/* Style the tabbar and tabs */
-.tabs-container {
-  overflow-y: hidden;
-  overflow-x: auto;
-  /* border-bottom: 2px solid #3498db; */
-  background-color: #42484a;
-  
-  padding: 0px;
-  margin: 0px;
+/* 
+  ===================================================
+  Tabbar and tabs
+  ===================================================
+*/
 
+.tabs-container {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 0px;
+  margin: 0px;
+  background-color: #42484a;
 }
 .tabs-container .tab-link {
   display: flex;
   flex-shrink: 0;
+  align-items: center;
+  margin: 1px 1px 0px 0px;
+  padding: 0px 4px;
+  width: 120px;
   background-color: #3498db;
   color: #ffffff;
   font-weight: bold;
-  margin-top: 1px;
-  margin-right: 1px;
-  padding: 0px 4px;
-  width: 120px;
   cursor: pointer;
-  line-height: 13px;
 }
 .tabs-container .tab-link:hover, .tabs-container .tab-link:active, .tabs-container .tab-link.active {
   background-color: #2c81ba;
 }
+.tabs-container .tab-link span.tab-icon {
+  flex-shrink: 0;
+}
 .tabs-container .tab-link span.tab-title {
-  display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap; 
-  padding: 4px 0px;
-  margin: 4px 2px;
+  white-space: nowrap;
 }
 .tabs-container .tab-link span.tab-close{
-  line-height: 13px;
-  font-weight: bold;
-  margin-left: 5px;
-  padding: 4px;
-  margin: 2px;
-  float: right;
-  right: 1px;
   display: none;
+  margin-left:auto; 
+  margin-right:4px;
 }
 .tabs-container .tab-link span.tab-close:hover{
   color: red;
@@ -102,7 +98,12 @@ dd {
   display: block;
 }
 
-/* Style the files dropdown and files*/
+/* 
+  ===================================================
+  Files dropdown
+  ===================================================
+*/
+
 .files-dropdown{
   background-color: #42484a;
   color: #ffffff;
@@ -127,30 +128,45 @@ dd {
 }
 .files-container .file-link {
   display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 1px 0px 0px 0px;
+  padding: 0px 4px;
+  width: 180px;
   background-color: #3498db;
   color: #ffffff;
   font-weight: bold;
-  margin-top: 1px;
-  padding: 0px 4px;
   cursor: pointer;
-  /* line-height: 13px; */
 }
 .files-container .file-link:hover, .files-container .file-link:active, .files-container .file-link.active {
   background-color: #2c81ba;
 }
 .files-container .file-link span.file-icon{
-  padding: 0 24px 0 0;
+  flex-shrink: 0;
 }
 .files-container .file-link span.file-title {
-  display: inline-block;
-  /* text-overflow: ellipsis; */
-  /* overflow: hidden; */
-  /* white-space: nowrap;  */
-  padding: 4px 0px;
-  margin: 4px 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.files-container .file-link span.file-close{
+  display: none;
+  margin-left:auto; 
+  margin-right:4px;
+}
+.files-container .file-link span.file-close:hover{
+  color: red;
+}
+.files-container .file-link:hover span.file-close, .tabs-container .tab-link:active span.tab-close{
+  display: block;
 }
 
-/* Add file popup */
+/* 
+  ===================================================
+  PopUp
+  ===================================================
+*/
+
 .addNewFilePopUp {
 text-align: center;
 padding-top: 20px;
@@ -167,13 +183,4 @@ padding-top: 20px;
 }
 #errMsg{
   color: red;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tabtab span, .files-container span {
-  text-overflow: ellipsis;
-  width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  cursor: pointer;
 }

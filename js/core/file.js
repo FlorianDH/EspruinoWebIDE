@@ -89,7 +89,7 @@
       var file = getFileByIdentifier($(this).data('id'));
       openCode(file);
     });
-    $('.tab-close').on('click',function(){
+    $('.close').on('click',function(){
       var file = getFileByIdentifier($(this).data('id'));
       removeFile(file);
       if(files.length === 0){
@@ -369,7 +369,7 @@ function addTabsOnInit(){
     return  '<div id="fullFile' + file.identifier + '" class="file-link" data-id="' + file.identifier + '">' +
             '<span class="file-icon ' + icon + ' sml"></span>' +
             '<span class="file-title" data-name="' + file.name + '" title="' + file.name + '.' + file.extension + '">' + file.name + '.' + file.extension + '</span>' +
-            // '<span class="file-close" data-type="file" data-id="' + file.identifier + '">x</span>' +
+            '<span class="file-close close" data-id="' + file.identifier + '">X</span>' +
             '</div>\n';
   }
 
@@ -390,7 +390,7 @@ function addTabsOnInit(){
     return  '<div id="fullTab' + file.identifier + '" class="tab-link" data-id="' + file.identifier + '">' +
             '<span class="tab-icon ' + icon + ' sml"></span>' +
             '<span class="tab-title" data-name="' + file.name + '" title="' + file.name + '.' + file.extension + '">' + file.name + '.' + file.extension + '</span>' +
-            '<span class="tab-close" data-type="tab" data-id="' + file.identifier + '">X</span>' +
+            '<span class="tab-close close" data-id="' + file.identifier + '">X</span>' +
             '</div>\n';
   }
 

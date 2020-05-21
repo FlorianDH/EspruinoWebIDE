@@ -53,7 +53,6 @@
       }
     });
 
-    // TODO check if this still is used in multi-tab
     // get code from our config area at bootup
     Espruino.addProcessor("initialised", function(data,callback) {
       var code;
@@ -74,7 +73,7 @@
       callback(data);
     });
 
-    // try and save code when window closes //TODO Check if this still works
+    // try and save code when window closes
     function saveCode(e) { 
       if(Espruino.Config.AUTO_SAVE_CODE)
         Espruino.Config.set("CODE", Espruino.Core.EditorJavaScript.getCode());
@@ -84,8 +83,6 @@
       window.addEventListener("beforeunload", saveCode);
   }
 
-  // FIXME popup doesn't close immediatly
-  // FIXME split in differnt functions
   // Open popup to name and create a new file
   function addNewFilePopup(newFile) {
     var fileType;
@@ -159,7 +156,7 @@
     $("#divblockly").hide();
     $("#divcode").show();
 
-    Espruino.Core.EditorJavaScript.madeVisible(); // FIXME "TypeError: Cannot read property 'madeVisible' of undefined"
+    Espruino.Core.EditorJavaScript.madeVisible();
   }
 
   function getEspruinoCode(callback) {

@@ -120,7 +120,7 @@
       if (newName == "" || newName.length == 0) {
         errMsgHolder.innerHTML = "Name is required";
         return false;
-      } else if (!(/^\S{2,}$/.test(newName))) {
+      } else if (!(/^\S{1,}$/.test(newName))) {
         errMsgHolder.innerHTML = 'Name cannot contain whitespace';
         return false;
       } else if(!(/^[a-zA-Z]+$/.test(newName))){
